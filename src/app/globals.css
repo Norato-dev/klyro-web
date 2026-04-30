@@ -1,26 +1,117 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* ── Colores ── */
+  --color-navy: #1a2744;
+  --color-navy-light: #223060;
+  --color-navy-dark: #111b30;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-ice: #dae8f8;
+  --color-ice-dim: rgba(218, 232, 248, 0.55);
+  --color-white-soft: #f4f8fd;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-accent: #5b9bd5;
+
+  --color-cyan: #00d4ff;
+  --color-cyan-dim: rgba(0, 212, 255, 0.18);
+  --color-cyan-glow: rgba(0, 212, 255, 0.35);
+
+  --color-teal: #0fe0b0;
+  --color-teal-dim: rgba(15, 224, 176, 0.15);
+
+  --color-orange: #ff7340;
+  --color-orange-dim: rgba(255, 115, 64, 0.15);
+
+  /* ── Tipografía ── */
+  --font-display: var(--font-syne), sans-serif;
+  --font-sans: var(--font-dm-sans), sans-serif;
+
+  /* ── Sombras / glows ── */
+  --shadow-cyan-glow: 0 4px 24px rgba(0, 212, 255, 0.3);
+  --shadow-cyan-glow-lg: 0 8px 32px rgba(0, 212, 255, 0.45);
+  --shadow-wa-glow: 0 6px 20px rgba(37, 211, 102, 0.3);
+
+  /* ── Animaciones ── */
+  --animate-fade-up: fadeUp 0.6s ease both;
+  --animate-pulse-cyan: pulseCyan 5s ease-in-out infinite;
+  --animate-pulse-teal: pulseTeal 7s ease-in-out infinite;
+  --animate-pulse-orange: pulseOrange 6s ease-in-out infinite 1s;
+  --animate-blink: blink 2s ease-in-out infinite;
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pulseCyan {
+    0%,
+    100% {
+      opacity: 0.7;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  }
+
+  @keyframes pulseTeal {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 0.9;
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+  }
+
+  @keyframes pulseOrange {
+    0%,
+    100% {
+      opacity: 0.5;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: translate(-50%, -50%) scale(1.12);
+    }
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.2;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reducir movimiento si el usuario lo pide */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+section[id] {
+  scroll-margin-top: 80px;
 }

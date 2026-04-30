@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Klyro Web Studio
 
-## Getting Started
+> Sitio oficial de **Klyro** — estudio de diseño y desarrollo web en Bogotá.
+> Webs profesionales para emprendedores y empresas que quieren crecer online.
 
-First, run the development server:
+🌐 **klyro.co**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## ✨ Stack
+
+- ⚡ **Next.js 16** (App Router) + **React 19**
+- 🎨 **Tailwind CSS v4**
+- 🔠 **TypeScript**
+- ✉️ **Resend** para envío de emails del formulario de contacto
+- 🛡️ **Zod** para validación de schemas
+- 🎯 **clsx** + **tailwind-merge** para composición de clases
+- 🔤 Tipografías: **Syne** (display) + **DM Sans** (texto)
+
+---
+
+## 📁 Estructura
+
+```
+src/
+├── app/
+│   ├── layout.tsx          # Root layout, fonts, providers
+│   ├── page.tsx            # Landing page
+│   ├── globals.css         # Tailwind + tokens de diseño
+│   └── actions/
+│       └── contact.ts      # Server action (Resend + Zod)
+├── components/
+│   ├── layout/             # Navbar, Footer
+│   ├── sections/           # Hero, Services, Process, Portfolio, About, CTA
+│   └── ui/                 # Button, ContactModal, OpenModalButton
+└── lib/
+    └── utils.ts            # cn() helper
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Desarrollo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Instalar dependencias
+npm install
 
-## Learn More
+# Servidor de desarrollo
+npm run dev
 
-To learn more about Next.js, take a look at the following resources:
+# Build de producción
+npm run build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Servir build
+npm start
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Lint
+npm run lint
+```
 
-## Deploy on Vercel
+Abre [http://localhost:3000](http://localhost:3000).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔐 Variables de entorno
+
+Crea un archivo `.env.local` en la raíz:
+
+```env
+RESEND_API_KEY=re_xxxxxxxxxxxx
+RESEND_FROM=hola@tudominio.com
+RESEND_TO=destino@tudominio.com
+```
+
+| Variable          | Descripción                                 |
+| ----------------- | ------------------------------------------- |
+| `RESEND_API_KEY`  | API key de [Resend](https://resend.com)     |
+| `RESEND_FROM`     | Email remitente (debe estar verificado)     |
+| `RESEND_TO`       | Email donde llegan los mensajes de contacto |
+
+---
+
+## 🎨 Sistema de diseño
+
+Paleta inspirada en lo nocturno y eléctrico — `navy-dark`, `cyan`, `teal`, `ice`.
+Tokens definidos como CSS custom properties en [src/app/globals.css](src/app/globals.css) y consumidos vía Tailwind.
+
+Componentes UI con variantes tipadas (ej. `Button` → `primary` / `whatsapp`) y composición segura con `cn()`.
+
+---
+
+## 📦 Secciones de la landing
+
+1. **Hero** — Propuesta de valor
+2. **Services** — Qué hacemos
+3. **Process** — Cómo trabajamos
+4. **Portfolio** — Trabajos seleccionados
+5. **About** — Quiénes somos
+6. **CTA** — Modal de contacto + WhatsApp directo
+
+---
+
+## 🤝 Contacto
+
+- 💬 WhatsApp: [+57 314 414 7996](https://wa.me/573144147996)
+- 🌐 Web: [klyro.co](https://klyro.co)
+
+---
+
+Hecho con ☕ y mucho `cn()` por el equipo de Klyro.
