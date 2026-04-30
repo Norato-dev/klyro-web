@@ -58,6 +58,10 @@ export async function generateMetadata({
       },
     },
 
+    verification: {
+      google: "gFocH61NmncaWucMx6oV0T72DSBjGTYtuevwMl4tdsk",
+    },
+
     // Open Graph — lo que aparece al compartir en WhatsApp, LinkedIn, etc.
     openGraph: {
       title,
