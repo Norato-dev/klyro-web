@@ -6,10 +6,10 @@ import { z } from "zod";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const schema = z.object({
-  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
-  email: z.string().email("Email inválido"),
-  projectType: z.string().min(1, "Selecciona un tipo de proyecto"),
-  message: z.string().min(10, "El mensaje debe tener al menos 10 caracteres"),
+  name: z.string().min(2, "name_too_short"),
+  email: z.string().email("email_invalid"),
+  projectType: z.string().min(1, "project_type_required"),
+  message: z.string().min(10, "message_too_short"),
 });
 
 export type ContactFormData = z.infer<typeof schema>;
@@ -26,11 +26,11 @@ export async function sendContactEmail(
   if (!parsed.success) {
     const errors: Partial<Record<keyof ContactFormData, string>> = {};
     parsed.error.issues.forEach((e) => {
-        const key = e.path[0] as keyof ContactFormData;
-        errors[key] = e.message;
+      const key = e.path[0] as keyof ContactFormData;
+      errors[key] = e.message; 
     });
     return { success: false, errors };
-    }
+  }
 
   const { name, email, projectType, message } = parsed.data;
 
@@ -74,7 +74,7 @@ export async function sendContactEmail(
   } catch {
     return {
       success: false,
-      errors: { message: "Error al enviar. Intenta de nuevo." },
+      errors: { message: "send_error" },
     };
   }
 }

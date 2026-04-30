@@ -1,7 +1,17 @@
-import { Button } from "@/components/ui/Button";
+import { getTranslations } from "next-intl/server";
 import { OpenModalButton } from "@/components/ui/OpenModalButton";
+import { Button } from "@/components/ui/Button";
 
-export function Hero() {
+export async function Hero() {
+  const t = await getTranslations("Hero");
+
+  const stats = [
+    { value: t("stat1Value"), label: t("stat1Label"), color: "text-cyan" },
+    { value: t("stat2Value"), label: t("stat2Label"), color: "text-teal" },
+    { value: t("stat3Value"), label: t("stat3Label"), color: "text-white-soft" },
+    { value: t("stat4Value"), label: t("stat4Label"), color: "text-orange" },
+  ];
+
   return (
     <section className="relative min-h-[92vh] flex flex-col items-center justify-center text-center px-6 md:px-12 pb-20 pt-16 overflow-hidden">
 
@@ -41,31 +51,30 @@ export function Hero() {
       {/* Badge */}
       <div className="relative z-10 inline-flex items-center gap-2 bg-cyan/[0.08] border border-cyan/25 text-cyan text-[11px] font-medium px-4 py-1.5 rounded-full mb-8 uppercase tracking-[0.06em] animate-fade-up">
         <span className="w-1.5 h-1.5 rounded-full bg-cyan shadow-[0_0_8px_#00d4ff] animate-blink" />
-        Agencia web · Bogotá, Colombia
+        {t("badge")}
       </div>
 
       {/* Título */}
       <h1 className="relative z-10 font-display font-extrabold text-[clamp(34px,5.2vw,60px)] leading-[1.07] tracking-[-0.04em] text-white-soft max-w-[700px] mb-6 animate-[fadeUp_0.6s_0.1s_ease_both]">
-        Webs que trabajan
+        {t("title1")}
         <br />
         <span className="bg-gradient-to-r from-cyan to-teal bg-clip-text text-transparent">
-          mientras tú descansas
+          {t("title2")}
         </span>
       </h1>
 
       {/* Descripción */}
       <p className="relative z-10 text-[16px] font-light leading-[1.75] text-ice-dim max-w-[460px] mb-10 animate-[fadeUp_0.6s_0.2s_ease_both]">
-        Diseñamos y desarrollamos sitios web profesionales para emprendedores
-        y empresas que quieren crecer online. Rápido, sin sorpresas, con resultados.
+        {t("description")}
       </p>
 
       {/* Botones */}
       <div className="relative z-10 flex flex-col sm:flex-row gap-3.5 items-center animate-[fadeUp_0.6s_0.3s_ease_both]">
         <OpenModalButton variant="primary" size="lg">
-          Iniciar mi proyecto →
+          {t("ctaPrimary")}
         </OpenModalButton>
         <Button variant="ghost" size="lg">
-          Ver portfolio
+          {t("ctaSecondary")}
         </Button>
       </div>
 
@@ -88,10 +97,3 @@ export function Hero() {
     </section>
   );
 }
-
-const stats = [
-  { value: "2–4",  label: "semanas de entrega",        color: "text-cyan"      },
-  { value: "48h",  label: "respuesta garantizada",      color: "text-teal"      },
-  { value: "100%", label: "responsive & optimizados",   color: "text-white-soft"},
-  { value: "30d",  label: "soporte post-lanzamiento",   color: "text-orange"    },
-];

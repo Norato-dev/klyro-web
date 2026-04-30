@@ -1,20 +1,32 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { OpenModalButton } from "@/components/ui/OpenModalButton";
 
-const navLinks = [
-  { label: "Servicios", href: "#servicios" },
-  { label: "Proceso", href: "#proceso" },
-  { label: "Portfolio", href: "#portfolio" },
-  { label: "Nosotros", href: "#nosotros" },
-];
-
 export function Navbar() {
+  const t = useTranslations("Navbar");
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    { label: t("services"), href: "#servicios" },
+    { label: t("process"), href: "#proceso" },
+    { label: t("portfolio"), href: "#portfolio" },
+    { label: t("about"), href: "#nosotros" },
+  ];
+
+  const switchLocale = (next: string) => {
+    router.replace(pathname, { locale: next });
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -22,7 +34,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Cierra el menú al hacer resize a desktop
   useEffect(() => {
     const onResize = () => {
       if (window.innerWidth >= 768) setMenuOpen(false);
@@ -31,10 +42,11 @@ export function Navbar() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Bloquea el scroll del body cuando el menú está abierto
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
@@ -63,7 +75,7 @@ export function Navbar() {
         </a>
 
         {/* Links — desktop */}
-        <nav aria-label="Navegación principal" className="hidden md:block">
+        <nav aria-label="Main navigation" className="hidden md:block">
           <ul className="flex items-center gap-8 list-none">
             {navLinks.map((link) => (
               <li key={link.href}>
@@ -78,37 +90,41 @@ export function Navbar() {
           </ul>
         </nav>
 
-        {/* Derecha: CTA + hamburguesa */}
+        {/* Derecha: language switcher + CTA + hamburguesa */}
         <div className="flex items-center gap-3">
+
+          {/* Language Switcher */}
+          <div className="flex items-center gap-1 rounded-lg border border-white/10 p-1">
+            {(["en", "es"] as const).map((lang) => (
+              <button
+                key={lang}
+                onClick={() => switchLocale(lang)}
+                className={cn(
+                  "text-[11px] font-display font-bold uppercase tracking-widest px-2 py-1 rounded-md transition-all duration-200",
+                  locale === lang
+                    ? "bg-cyan/20 text-cyan"
+                    : "text-ice-dim hover:text-ice"
+                )}
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+
           <OpenModalButton variant="nav" size="sm" className="hidden md:inline-flex">
-            Cuéntanos tu proyecto →
+            {t("cta")}
           </OpenModalButton>
 
           {/* Botón hamburguesa — solo mobile */}
           <button
             className="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5 rounded-lg border border-white/10 hover:border-cyan/30 transition-colors duration-200"
             onClick={() => setMenuOpen((prev) => !prev)}
-            aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
           >
-            <span
-              className={cn(
-                "block w-4 h-[1.5px] bg-ice rounded-full transition-all duration-300",
-                menuOpen && "rotate-45 translate-y-[6px]"
-              )}
-            />
-            <span
-              className={cn(
-                "block w-4 h-[1.5px] bg-ice rounded-full transition-all duration-300",
-                menuOpen && "opacity-0 scale-x-0"
-              )}
-            />
-            <span
-              className={cn(
-                "block w-4 h-[1.5px] bg-ice rounded-full transition-all duration-300",
-                menuOpen && "-rotate-45 -translate-y-[6px]"
-              )}
-            />
+            <span className={cn("block w-4 h-[1.5px] bg-ice rounded-full transition-all duration-300", menuOpen && "rotate-45 translate-y-[6px]")} />
+            <span className={cn("block w-4 h-[1.5px] bg-ice rounded-full transition-all duration-300", menuOpen && "opacity-0 scale-x-0")} />
+            <span className={cn("block w-4 h-[1.5px] bg-ice rounded-full transition-all duration-300", menuOpen && "-rotate-45 -translate-y-[6px]")} />
           </button>
         </div>
       </header>
@@ -120,19 +136,17 @@ export function Navbar() {
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
       >
-        {/* Fondo oscuro */}
         <div
           className="absolute inset-0 bg-navy-dark/95 backdrop-blur-xl"
           onClick={closeMenu}
         />
 
-        {/* Panel de links */}
         <nav
           className={cn(
             "absolute top-[73px] left-0 right-0 px-8 py-10 flex flex-col gap-2 transition-all duration-300",
             menuOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
           )}
-          aria-label="Menú móvil"
+          aria-label="Mobile menu"
         >
           {navLinks.map((link, i) => (
             <a
@@ -150,15 +164,32 @@ export function Navbar() {
             </a>
           ))}
 
-          {/* CTA en móvil */}
-          <div className="mt-8">
+          {/* Language switcher móvil */}
+          <div className="flex items-center gap-2 mt-4">
+            {(["en", "es"] as const).map((lang) => (
+              <button
+                key={lang}
+                onClick={() => { switchLocale(lang); closeMenu(); }}
+                className={cn(
+                  "text-[13px] font-display font-bold uppercase tracking-widest px-4 py-2 rounded-lg border transition-all duration-200",
+                  locale === lang
+                    ? "border-cyan/40 bg-cyan/10 text-cyan"
+                    : "border-white/10 text-ice-dim hover:text-ice"
+                )}
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-4">
             <OpenModalButton
               variant="primary"
               size="lg"
               className="w-full"
               onClick={closeMenu}
             >
-              Cuéntanos tu proyecto →
+              {t("cta")}
             </OpenModalButton>
           </div>
         </nav>
