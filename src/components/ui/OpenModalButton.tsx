@@ -13,20 +13,24 @@ export function OpenModalButton({
   size = "md",
   className,
   children,
-   onClick,
+  onClick,
 }: {
   variant?: Variant;
   size?: Size;
   className?: string;
   children: ReactNode;
+  onClick?: () => void;
 }) {
   const { openModal } = useContactModal();
   return (
     <Button
       variant={variant}
       size={size}
-      className={className}
-      onClick={openModal}
+      className={cn(className)}
+      onClick={() => {
+        openModal();
+        onClick?.();
+      }}
     >
       {children}
     </Button>
