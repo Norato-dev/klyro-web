@@ -1,0 +1,23 @@
+# Klyro Web Studio
+
+> Boutique web design and development studio based in Bogotá, Colombia.
+> We build professional websites for entrepreneurs and businesses ready to grow online.
+
+## Services
+- Corporate websites
+- E-commerce stores
+- Landing pages
+- Technical maintenance
+- SEO optimization
+
+## Contact
+- Website: https://klyroweb.co
+- WhatsApp: https://wa.me/573144147996
+
+## Languages
+- English: https://klyroweb.co/en
+- Spanish: https://klyroweb.co/es
+
+## Usage policy
+Content on this site may be used for search retrieval and real-time AI responses.
+Training AI models on this content is not permitted.

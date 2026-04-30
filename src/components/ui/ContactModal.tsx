@@ -16,6 +16,7 @@ const empty: ContactFormData = {
   email: "",
   projectType: "",
   message: "",
+  website: "", 
 };
 
 export function ContactModal() {
@@ -197,7 +198,16 @@ export function ContactModal() {
                   className={cn(inputClass(!!errors.message), "resize-none")}
                 />
               </Field>
-
+              {/* Campo oculto para bots */}
+              <div aria-hidden="true" style={{ display: "none" }}>
+                <input
+                  name="website"
+                  value={form.website ?? ""}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <Button
                   type="submit"

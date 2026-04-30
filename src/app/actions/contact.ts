@@ -2,6 +2,7 @@
 
 import { Resend } from "resend";
 import { z } from "zod";
+import { headers } from "next/headers";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -10,6 +11,8 @@ const schema = z.object({
   email: z.string().email("email_invalid"),
   projectType: z.string().min(1, "project_type_required"),
   message: z.string().min(10, "message_too_short"),
+  // Honeypot — debe estar vacío siempre
+  website: z.string().max(0, "bot_detected"),
 });
 
 export type ContactFormData = z.infer<typeof schema>;
@@ -18,16 +21,57 @@ export type ActionResult =
   | { success: true }
   | { success: false; errors: Partial<Record<keyof ContactFormData, string>> };
 
+// Rate limiting simple en memoria
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+const RATE_LIMIT = 3;        // máx 3 envíos
+const WINDOW_MS = 60 * 60 * 1000; // por hora
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + WINDOW_MS });
+    return true;
+  }
+
+  if (entry.count >= RATE_LIMIT) return false;
+
+  entry.count++;
+  return true;
+}
+
 export async function sendContactEmail(
-  data: ContactFormData
+  data: ContactFormData & { website?: string }
 ): Promise<ActionResult> {
+
+  // Rate limiting por IP
+  const headersList = await headers();
+  const ip =
+    headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    headersList.get("x-real-ip") ??
+    "unknown";
+
+  if (!checkRateLimit(ip)) {
+    return {
+      success: false,
+      errors: { message: "send_error" },
+    };
+  }
+
+  // Honeypot check
+  if (data.website && data.website.length > 0) {
+    // Bot detectado — respuesta falsa exitosa para no revelar la trampa
+    return { success: true };
+  }
+
   const parsed = schema.safeParse(data);
 
   if (!parsed.success) {
     const errors: Partial<Record<keyof ContactFormData, string>> = {};
     parsed.error.issues.forEach((e) => {
       const key = e.path[0] as keyof ContactFormData;
-      errors[key] = e.message; 
+      errors[key] = e.message;
     });
     return { success: false, errors };
   }
@@ -64,7 +108,7 @@ export async function sendContactEmail(
             </tr>
           </table>
           <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(0,212,255,0.15); font-size: 12px; color: rgba(218,232,248,0.4);">
-            Enviado desde klyro.co
+            Enviado desde klyroweb.co
           </div>
         </div>
       `,
