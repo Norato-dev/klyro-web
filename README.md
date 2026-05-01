@@ -3,7 +3,7 @@
 > Sitio oficial de **Klyro** — estudio de diseño y desarrollo web en Bogotá.
 > Webs profesionales para emprendedores y empresas que quieren crecer online.
 
-🌐 **klyro.co**
+🌐 **klyroweb.co**
 
 ---
 
