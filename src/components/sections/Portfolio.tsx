@@ -1,75 +1,9 @@
 import { getTranslations } from "next-intl/server";
-
-type Project = {
-  emoji: string;
-  tag: string;
-  tagColor: string;
-  title: string;
-  description: string;
-  bg: string;
-  glow: string;
-};
-
-function PortfolioCard({
-  project,
-  thumbHeight,
-}: {
-  project: Project;
-  thumbHeight: string;
-}) {
-  return (
-    <div className="group rounded-2xl overflow-hidden border border-white/[0.07] bg-white/[0.02] cursor-pointer transition-all duration-250 hover:-translate-y-1 hover:border-cyan/20">
-      <div className={`${thumbHeight} bg-gradient-to-br ${project.bg} flex items-center justify-center relative overflow-hidden`}>
-        <div className={`absolute top-0 right-0 w-[120px] h-[120px] rounded-full ${project.glow} opacity-20 blur-2xl`} />
-        <span className="text-4xl relative z-10">{project.emoji}</span>
-      </div>
-      <div className="p-5">
-        <div className={`text-[12px] tracking-[0.1em] uppercase font-medium mb-1.5 ${project.tagColor}`}>
-          {project.tag}
-        </div>
-        <h3 className="font-display font-bold text-[18px] text-white-soft mb-1">
-          {project.title}
-        </h3>
-        <p className="text-[14px] text-ice-dim font-light">{project.description}</p>
-      </div>
-    </div>
-  );
-}
+import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 
 export async function Portfolio() {
   const t = await getTranslations("Portfolio");
-
-  const projects = {
-    main: {
-      emoji: "🛍️",
-      tag: t("mainTag"),
-      tagColor: "text-cyan",
-      title: t("mainTitle"),
-      description: t("mainDesc"),
-      bg: "from-navy via-[#0e3055] to-[#0d2040]",
-      glow: "bg-cyan/20",
-    },
-    side: [
-      {
-        emoji: "💼",
-        tag: t("side1Tag"),
-        tagColor: "text-teal",
-        title: t("side1Title"),
-        description: t("side1Desc"),
-        bg: "from-navy via-[#0d3030] to-[#0a2020]",
-        glow: "bg-teal/20",
-      },
-      {
-        emoji: "🏠",
-        tag: t("side2Tag"),
-        tagColor: "text-orange",
-        title: t("side2Title"),
-        description: t("side2Desc"),
-        bg: "from-navy via-[#302010] to-[#201408]",
-        glow: "bg-orange/20",
-      },
-    ],
-  };
 
   return (
     <section id="portfolio" className="py-20 px-6 md:px-12 max-w-[1080px] mx-auto">
@@ -90,12 +24,88 @@ export async function Portfolio() {
 
       {/* Grid asimétrico */}
       <div className="grid grid-cols-1 md:grid-cols-[1.35fr_1fr] gap-3.5">
-        <PortfolioCard project={projects.main} thumbHeight="h-[180px]" />
+
+        {/* Card principal — Meridian (con imagen real + link) */}
+        <Link
+          href={`/portfolio/${t("mainSlug")}`}
+          className="group rounded-2xl overflow-hidden border border-white/[0.07] bg-white/[0.02] cursor-pointer transition-all duration-250 hover:-translate-y-1 hover:border-cyan/20"
+        >
+          {/* Imagen real */}
+          <div className="h-[280px] relative overflow-hidden">
+            <Image
+              src="/portfolio/meridian-hero.png"
+              alt={t("mainTitle")}
+              fill
+              className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            />
+            {/* Overlay sutil */}
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 to-transparent" />
+          </div>
+          <div className="p-5">
+            <div className="text-[12px] tracking-[0.1em] uppercase font-medium mb-1.5 text-teal">
+              {t("mainTag")}
+            </div>
+            <h3 className="font-display font-bold text-[18px] text-white-soft mb-1">
+              {t("mainTitle")}
+            </h3>
+            <p className="text-[14px] text-ice-dim font-light">{t("mainDesc")}</p>
+            <span className="mt-3 inline-flex items-center gap-1 text-[12px] text-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              {t("viewProject")}
+            </span>
+          </div>
+        </Link>
+
+        {/* Cards secundarias */}
         <div className="flex flex-col sm:flex-row md:flex-col gap-3.5">
-          {projects.side.map((p) => (
-            <PortfolioCard key={p.title} project={p} thumbHeight="h-[104px]" />
-          ))}
+          {/* Arco — ya real, clickeable */}
+          <Link
+            href={`/portfolio/arco`}
+            className="group rounded-2xl overflow-hidden border border-white/[0.07] bg-white/[0.02] flex-1 transition-all duration-250 hover:-translate-y-1 hover:border-cyan/20"
+          >
+            <div className="h-[104px] relative overflow-hidden">
+              <Image
+                src="/portfolio/arco-hero.png"
+                alt="Arco Inmobiliaria"
+                fill
+                className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/70 to-transparent" />
+            </div>
+            <div className="p-5">
+              <div className="text-[12px] tracking-[0.1em] uppercase font-medium mb-1.5 text-orange">
+                {t("side1Tag")}
+              </div>
+              <h3 className="font-display font-bold text-[18px] text-white-soft mb-1">
+                {t("side1Title")}
+              </h3>
+              <p className="text-[14px] text-ice-dim font-light">{t("side1Desc")}</p>
+              <span className="mt-2 inline-flex items-center text-[11px] text-cyan opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {t("viewProject")}
+              </span>
+            </div>
+          </Link>
+
+          {/* E-commerce — placeholder */}
+          <div className="group rounded-2xl overflow-hidden border border-white/[0.07] bg-white/[0.02] flex-1 transition-all duration-250">
+            <div className="h-[104px] bg-gradient-to-br from-navy via-[#0e3055] to-[#0d2040] flex items-center justify-center relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-[120px] h-[120px] rounded-full bg-cyan/20 opacity-20 blur-2xl" />
+              <span className="text-4xl relative z-10">🛍️</span>
+            </div>
+            <div className="p-5">
+              <div className="text-[12px] tracking-[0.1em] uppercase font-medium mb-1.5 text-cyan">
+                {t("side2Tag")}
+              </div>
+              <h3 className="font-display font-bold text-[18px] text-white-soft mb-1">
+                {t("side2Title")}
+              </h3>
+              <p className="text-[14px] text-ice-dim font-light">{t("side2Desc")}</p>
+              <span className="mt-2 inline-flex items-center text-[11px] text-ice-dim/30">
+                {t("comingSoon")}
+              </span>
+            </div>
+          </div>
         </div>
+
       </div>
     </section>
   );
