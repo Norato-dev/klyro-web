@@ -60,19 +60,28 @@
     "eyebrow": "Projects",
     "title": "Portfolio",
     "description": "Projects that reflect our focus on design, speed and real results.",
-    "mainTag": "Financial Advisory",
-    "mainTitle": "Meridian Advisory",
-    "mainDesc": "High-converting landing page · 100/100 PageSpeed",
-    "mainSlug": "meridian",
-    "mainLive": "https://meridian.klyroweb.co",
     "viewProject": "View project →",
     "comingSoon": "Coming soon",
-    "side1Tag": "Real estate",
-    "side1Title": "Bogotá Real Estate",
-    "side1Desc": "Institutional site + property catalog",
-    "side2Tag": "E-commerce",
-    "side2Title": "Local fashion store",
-    "side2Desc": "Shopify + custom design · Launched in 3 weeks"
+    "projects": {
+      "meridian": {
+        "tag": "Financial Advisory",
+        "title": "Meridian Advisory",
+        "summary": "High-converting landing page · 100/100 PageSpeed",
+        "imageAlt": "Meridian Advisory website screenshot"
+      },
+      "arco": {
+        "tag": "Real Estate",
+        "title": "Arco Inmobiliaria",
+        "summary": "Property catalog + mortgage calculator · Mapbox",
+        "imageAlt": "Arco Inmobiliaria website screenshot"
+      },
+      "nomada": {
+        "tag": "E-commerce",
+        "title": "Nómada Store",
+        "summary": "Slow fashion store · Next.js + admin panel · Colombian artisans",
+        "imageAlt": "Nómada Store website screenshot"
+      }
+    }
   },
   "About": {
     "eyebrow": "About us",

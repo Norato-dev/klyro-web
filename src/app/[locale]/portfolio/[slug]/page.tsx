@@ -127,19 +127,22 @@ export default async function ProjectPage({ params}: Props) {
                     {lang === "es" ? "Resultados" : "Results"}
                 </h2>
                 <div className="space-y-3">
-                    {project.metrics.map((m) => (
+                    {project.metrics.map((m) => {
+                        const val = typeof m.value === "string" ? m.value : m.value[lang];
+                        return (
                     <div
-                        key={m.value}
+                        key={val}
                         className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]"
                     >
                         <div className="font-display font-bold text-[26px] text-cyan tracking-tight">
-                        {m.value}
+                        {val}
                         </div>
                         <div className="text-[12px] text-ice-dim mt-0.5">
                         {m.label[lang]}
                         </div>
                     </div>
-                    ))}
+                        );
+                    })}
                 </div>
                 </aside>
             </div>

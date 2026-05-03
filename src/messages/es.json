@@ -60,19 +60,28 @@
     "eyebrow": "Proyectos",
     "title": "Portfolio",
     "description": "Proyectos que reflejan nuestro enfoque en diseño, velocidad y resultados reales.",
-    "mainTag": "Consultoría Financiera",
-    "mainTitle": "Meridian Advisory",
-    "mainDesc": "Landing de alta conversión · 100/100 PageSpeed",
-    "mainSlug": "meridian",
-    "mainLive": "https://meridian.klyroweb.co",
     "viewProject": "Ver proyecto →",
     "comingSoon": "Próximamente",
-    "side1Tag": "Inmobiliaria",
-    "side1Title": "Inmobiliaria Bogotá",
-    "side1Desc": "Sitio institucional + catálogo de propiedades",
-    "side2Tag": "E-commerce",
-    "side2Title": "Tienda de moda local",
-    "side2Desc": "Shopify + diseño personalizado · Lanzado en 3 semanas"
+    "projects": {
+      "meridian": {
+        "tag": "Consultoría Financiera",
+        "title": "Meridian Advisory",
+        "summary": "Landing de alta conversión · 100/100 PageSpeed",
+        "imageAlt": "Captura del sitio web de Meridian Advisory"
+      },
+      "arco": {
+        "tag": "Inmobiliaria",
+        "title": "Arco Inmobiliaria",
+        "summary": "Catálogo de propiedades + calculadora · Mapbox",
+        "imageAlt": "Captura del sitio web de Arco Inmobiliaria"
+      },
+      "nomada": {
+        "tag": "E-commerce",
+        "title": "Nómada Store",
+        "summary": "Tienda slow fashion · Next.js + panel de admin · Artesanos colombianos",
+        "imageAlt": "Captura del sitio web de Nómada Store"
+      }
+    }
   },
   "About": {
     "eyebrow": "Nosotros",

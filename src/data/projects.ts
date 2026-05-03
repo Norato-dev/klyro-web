@@ -12,9 +12,17 @@ export type Project = {
     stack: string[];
     metrics: {
     label: { en: string; es: string };
-    value: string;
+    value: string | { en: string; es: string };
     }[];
     gallery: string[];
+    /** Show in the home portfolio section (max 3) */
+    featured: boolean;
+    /** Use as the main large card in the home section (only one should be true) */
+    main: boolean;
+    /** Placeholder — not yet launched, no detail page */
+    comingSoon?: boolean;
+    /** Emoji shown on placeholder cards */
+    emoji?: string;
 };
 export const projects: Project[] = [
     {
@@ -60,13 +68,15 @@ export const projects: Project[] = [
         },
         {
             label: { en: "Delivery time", es: "Tiempo de entrega" },
-            value: "2 semanas",
+            value: { en: "2 weeks", es: "2 semanas" },
         },
         ],
         gallery: [
         "/portfolio/meridian-hero.png",
         "/portfolio/meridian-roi.png",
         ],
+        featured: true,
+        main: false,
     },
     {
         slug: "arco",
@@ -95,7 +105,12 @@ export const projects: Project[] = [
         metrics: [
             { label: { en: "Properties listed", es: "Propiedades listadas" }, value: "7" },
             { label: { en: "Interactive map", es: "Mapa interactivo" }, value: "Mapbox" },
-            { label: { en: "Delivery time", es: "Tiempo de entrega" }, value: "3 semanas" },
+            { label: 
+                { 
+                    en: "Delivery time", es: "Tiempo de entrega" 
+                }, 
+              value: { en: "3 weeks", es: "3 semanas" }
+            },
             { label: { en: "Mortgage calculator", es: "Calculadora" }, value: "✓" },
             { label: { en: "PageSpeed Score", es: "PageSpeed Score" }, value: "98/100" },
         ],
@@ -103,6 +118,35 @@ export const projects: Project[] = [
             "/portfolio/arco-interna.png",
             "/portfolio/arco-full.png",
         ],
+        featured: true,
+        main: false,
+    },
+    {
+        slug: "nomada",
+        liveUrl: "https://tienda.klyroweb.co/",
+        image: "/portfolio/nomada-hero.png",
+        imageAlt: { en: "Nómada Store website screenshot", es: "Captura del sitio web de Nómada Store" },
+        tag: { en: "E-commerce", es: "E-commerce" },
+        tagColor: "text-cyan",
+        title: "Nómada Store",
+        summary: { en: "Slow fashion store · Next.js + admin panel · Colombian artisans", es: "Tienda slow fashion · Next.js + panel de admin · Artesanos colombianos" },
+        description: { en: "Full-featured online store with product catalog, cart, checkout, and a complete admin dashboard for managing orders and inventory.", es: "Tienda online completa con catálogo de productos, carrito, checkout y un panel de administración para gestionar pedidos e inventario." },
+        problem: { en: "Artisan brands need a professional storefront that reflects their craftsmanship — without the cost and complexity of large platforms.", es: "Las marcas artesanales necesitan una tienda profesional que refleje su trabajo a mano, sin el costo ni la complejidad de grandes plataformas." },
+        stack: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Lucide React"],
+        metrics: [
+            { label: { en: "PageSpeed", es: "PageSpeed" }, value: "100" },
+            { label: { en: "Delivery time", es: "Tiempo de entrega" }, value: { en: "3 weeks", es: "3 semanas" } },
+            { label: { en: "Admin panel", es: "Panel admin" }, value: "included" },
+            { label: { en: "Mobile ready", es: "Mobile ready" }, value: "100%" },
+        ],
+        gallery: [
+            "/portfolio/nomada-hero.png",
+            "/portfolio/nomada-interna.png",
+            "/portfolio/nomada-inventario.png",
+            "/portfolio/nomada-pedidos.png",
+        ],
+        featured: true,
+        main: true,
     },
 ];
 
