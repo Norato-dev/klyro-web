@@ -63,7 +63,7 @@ export function Navbar() {
       >
         {/* Logo */}
         <a
-          href="#"
+          href="/"
           onClick={closeMenu}
           className="flex items-center gap-3 group"
           aria-label="Klyro inicio"

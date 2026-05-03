@@ -73,9 +73,9 @@ export async function Hero() {
         <OpenModalButton variant="primary" size="lg">
           {t("ctaPrimary")}
         </OpenModalButton>
-        <Button variant="ghost" size="lg">
+        {/* <Button variant="ghost" size="lg">
           {t("ctaSecondary")}
-        </Button>
+        </Button> */}
       </div>
 
       {/* Stats bar */}
