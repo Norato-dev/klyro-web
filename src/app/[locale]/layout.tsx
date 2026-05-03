@@ -6,6 +6,7 @@ import { ContactModalProvider } from "@/components/ui/ContactModalContext";
 import { ContactModal } from "@/components/ui/ContactModal";
 import { JsonLd } from "@/components/layout/JsonLd";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "../globals.css";
 
 const syne = Syne({
@@ -124,6 +125,7 @@ export default async function LocaleLayout({
           </ContactModalProvider>
         </NextIntlClientProvider>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
